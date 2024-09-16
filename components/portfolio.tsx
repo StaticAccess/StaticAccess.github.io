@@ -3,13 +3,13 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle} from "@/components/ui/dialog"
 import { Github, Linkedin, FileDown, ExternalLink, Menu, Sun, Moon, Mail, Phone, XIcon,Award, Calendar, ChevronDown, ChevronUp } from 'lucide-react'
 import { Caveat, Inter } from 'next/font/google'
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import Image from 'next/image'
-import { TwitterLogoIcon } from '@radix-ui/react-icons'
+
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Card, CardContent } from "@/components/ui/card"
 
@@ -22,14 +22,14 @@ const socialIcons = [
   { Icon:  XIcon, href: 'https://x.com/SoubhagyaDas_'}
 ]
 
-const sections = ['about', 'skills', 'projects', 'blog', 'certifications', 'contact']
+const sections = ['about', 'skills', 'projects', 'blog', 'certifications', 'contact'];
 
 export function PortfolioComponent() {
   const [activeSection, setActiveSection] = useState("about")
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [selectedProject, setSelectedProject] = useState(null)
   const [isDarkMode, setIsDarkMode] = useState(false)
-  const sectionRefs = useRef(sections.map(() => React.createRef()))
+  const sectionRefs = useRef(sections.map(() => React.createRef<HTMLElement>()))
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,8 +39,8 @@ export function PortfolioComponent() {
       sections.forEach((section, index) => {
         const element = sectionRefs.current[index].current
         if (element) {
-          const offsetTop = element.offsetTop
-          if (scrollPosition >= offsetTop - pageHeight / 2 && scrollPosition < offsetTop + element.offsetHeight - pageHeight / 2) {
+          const offsetTop = (element as HTMLElement).offsetTop
+          if (scrollPosition >= offsetTop - pageHeight / 2 && scrollPosition < offsetTop + (element as HTMLElement).offsetHeight - pageHeight / 2) {
             setActiveSection(section)
           }
         }
@@ -209,7 +209,7 @@ export function PortfolioComponent() {
   )
 }
 
-const SectionWrapper = React.forwardRef(({ children, title, id, isDarkMode }, ref) => (
+const SectionWrapper = React.forwardRef(({ children, title, id, isDarkMode }:{ children: React.ReactNode, title: string, id: string, isDarkMode: boolean }, ref:React.Ref<HTMLElement>) => (
   <section
     id={id}
     ref={ref}
@@ -219,19 +219,21 @@ const SectionWrapper = React.forwardRef(({ children, title, id, isDarkMode }, re
     {children}
   </section>
 ))
+SectionWrapper.displayName = 'SectionWrapper';
 
-const AboutSection = React.forwardRef(({ isDarkMode }, ref) => (
+
+const AboutSection = React.forwardRef<HTMLElement, { isDarkMode: boolean }>(({ isDarkMode }, ref) => (
   <SectionWrapper title="About Me" id="about" ref={ref} isDarkMode={isDarkMode}>
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
-      <p className="mb-6 text-lg" align="justify">
-      Welcome! I'm <b>Soubhagyaranjan Das</b>, a tech explorer born by the sea in Odisha. My journey has taken me from peaceful coastal villages to the exciting world of computer science. Three things that truly captivate me are the endless possibilities of computer science, the mysteries of outer space, and the fundamental laws of physics. Through this website, I aim to share my projects, insights, and discoveries in these fields.
+      <p className="mb-6 text-lg text-justify" >
+      Welcome! I am <b>Soubhagyaranjan Das</b>, a tech explorer born by the sea in Odisha. My journey has taken me from peaceful coastal villages to the exciting world of computer science. Three things that truly captivate me are the endless possibilities of computer science, the mysteries of outer space, and the fundamental laws of physics. Through this website, I aim to share my projects, insights, and discoveries in these fields.
       </p>
-      <p className="mb-6 text-lg" align="justify">
-      Here, you'll find a unique blend of tech innovation, cosmic exploration, and the elegance of physics—all viewed through my coastal-meets-code lens. Join me as we dive into the digital world, explore the stars, and uncover the universe's secrets.
+      <p className="mb-6 text-lg text-justify">
+      Here, you will find a unique blend of tech innovation, cosmic exploration, and the elegance of physics—all viewed through my coastal-meets-code lens. Join me as we dive into the digital world, explore the stars, and uncover the universe&apos;s secrets.
       </p>
       <p className="mb-6 text-lg">
         
@@ -261,8 +263,10 @@ const AboutSection = React.forwardRef(({ isDarkMode }, ref) => (
     </motion.div>
   </SectionWrapper>
 ))
+AboutSection.displayName = 'AboutSection';
 
-const SkillsSection = React.forwardRef(({ isDarkMode }, ref) => {
+
+const SkillsSection = React.forwardRef<HTMLElement, { isDarkMode: boolean }>(({ isDarkMode }, ref) => {
   const skills = {
     "Programming Languages": ["Python", "Java", "C", "C#", "JavaScript","SQL"],
     "Libraries & Frameworks": ["React", "Next.js", "Pandas", "Numpy", "Tailwind CSS","Flask"],
@@ -302,8 +306,11 @@ const SkillsSection = React.forwardRef(({ isDarkMode }, ref) => {
     </SectionWrapper>
   )
 })
+SkillsSection.displayName = 'SkillsSection';
 
-const ProjectsSection = React.forwardRef(({ setSelectedProject, isDarkMode }, ref) => {
+const ProjectsSection =  React.forwardRef(({ setSelectedProject, isDarkMode }: { setSelectedProject: React.Dispatch<React.SetStateAction<null>>, isDarkMode: boolean }, ref: React.Ref<HTMLElement>) => {
+  console.log(setSelectedProject);
+  
   const projects = [
     {
       title: "Book Recommender System",
@@ -383,8 +390,9 @@ const ProjectsSection = React.forwardRef(({ setSelectedProject, isDarkMode }, re
     </SectionWrapper>
   )
 })
+ProjectsSection.displayName = 'ProjectsSection';
 
-const BlogSection = React.forwardRef(({ isDarkMode }, ref) => {
+const BlogSection = React.forwardRef(({ isDarkMode }:{isDarkMode:boolean}, ref:React.Ref<HTMLElement>) => {
   const posts = [
     {
       title: "My Journey into Software Engineering",
@@ -434,8 +442,9 @@ const BlogSection = React.forwardRef(({ isDarkMode }, ref) => {
     </SectionWrapper>
   )
 })
+BlogSection.displayName = 'BlogSection';
 
-const CertificationsSection = React.forwardRef(({ isDarkMode }, ref) => {
+const CertificationsSection = React.forwardRef(({ isDarkMode }:{isDarkMode:boolean}, ref:React.Ref<HTMLElement>) => {
   const [showAll, setShowAll] = useState(false)
   
   const certifications = [
@@ -537,9 +546,10 @@ const CertificationsSection = React.forwardRef(({ isDarkMode }, ref) => {
       </Card>
     </SectionWrapper>
   )
-})  
+}) 
+CertificationsSection.displayName = 'CertificationsSection'; 
 
-const ContactSection = React.forwardRef(({ isDarkMode }, ref) => (
+const ContactSection = React.forwardRef(({ isDarkMode }:{isDarkMode:boolean}, ref:React.Ref<HTMLElement>) => (
   <SectionWrapper title="Contact" id="contact" ref={ref} isDarkMode={isDarkMode}>
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -547,7 +557,7 @@ const ContactSection = React.forwardRef(({ isDarkMode }, ref) => (
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <p className="mb-6 text-lg">
-        I'm always open to new opportunities and collaborations. Feel free to reach out!
+        I am always open to new opportunities and collaborations. Feel free to reach out!
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div className={`flex items-center ${isDarkMode ? 'text-white' : 'text-black'}`}>
@@ -570,7 +580,8 @@ const ContactSection = React.forwardRef(({ isDarkMode }, ref) => (
     </motion.div>
   </SectionWrapper>
 ))
-const ProjectDialog = ({ project, onClose, isDarkMode }) => {
+ContactSection.displayName = 'ContactSection';
+const ProjectDialog = ({ project, onClose, isDarkMode }:{ project: Project | null, onClose: () => void, isDarkMode: boolean }) => {
   if (!project) return null
 
   return (
@@ -605,4 +616,14 @@ const ProjectDialog = ({ project, onClose, isDarkMode }) => {
       </DialogContent>
     </Dialog>
   )
+}
+
+interface Project {
+  title: string;
+  image: string;
+  longDescription: string;
+  challenges: string;
+  learnings: string;
+  github: string;
+  live: string;
 }
