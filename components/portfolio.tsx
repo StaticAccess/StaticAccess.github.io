@@ -230,11 +230,10 @@ const AboutSection = React.forwardRef<HTMLElement, { isDarkMode: boolean }>(({ i
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <p className="mb-6 text-lg text-justify" >
-      Welcome! I am <b>Soubhagyaranjan Das</b>, a tech explorer born by the sea in Odisha. My journey has taken me from peaceful coastal villages to the exciting world of computer science. Three things that truly captivate me are the endless possibilities of computer science, the mysteries of outer space, and the fundamental laws of physics. Through this website, I aim to share my projects, insights, and discoveries in these fields.
-      </p>
-      <p className="mb-6 text-lg text-justify">
-      Here, you will find a unique blend of tech innovation, cosmic exploration, and the elegance of physics—all viewed through my coastal-meets-code lens. Join me as we dive into the digital world, explore the stars, and uncover the universe&apos;s secrets.
-      </p>
+      I am a software engineer based in India, with expertise in machine learning, networking, cybersecurity, and DBMS. As a fresher, I am focused on contributing to projects that make a positive impact, while enhancing my skills in the software development life cycle and the .NET framework.
+      
+
+     </p>
       <p className="mb-6 text-lg">
         
       </p>
